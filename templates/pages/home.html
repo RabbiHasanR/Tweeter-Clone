@@ -1,11 +1,18 @@
 {% extends 'base.html' %}
 {%block head_title%}home{% endblock head_title%}
 {% block content %}
-<h1>Welcome to Tweeter!</h1>
 
-<div id="tweets">
-
+<div class="row text-center">
+    <div class="col">
+        <h1>Welcome to Twitter!</h1>
+    </div>
 </div>
+<div class="row" id="tweets">
+    <!-- <div id="tweets">
+    
+    </div> -->
+</div>
+
 
 <script>
     function handleDidLike(tweet_id,currentCount){
@@ -15,7 +22,7 @@
         return '<button class="btn btn-primary btn-sm" onClick=handleDidLike("'+tweet.id+'","'+tweet.likes+'")>' + tweet.likes +' Like</button>'
     }
     function formatTweetElement(tweet){
-        var formattedTweet= '<div class="mb-4 tweet" id="tweet-'+tweet.id+'"><h1>'+
+        var formattedTweet= '<div class="col-12 col-md-10 mx-auto border rounded py-3 mb-4 tweet" id="tweet-'+tweet.id+'">'+
              '<p>' + tweet.content +
                '</p><div class="btn-group">'+likeBtn(tweet)+
             '</div></div>'
