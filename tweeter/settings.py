@@ -25,7 +25,7 @@ SECRET_KEY = 'y5a)(zdi^@ljhh6=^sxl1=$(y&9)8et556jefq$m2j=*f=bim('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
