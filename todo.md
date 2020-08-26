@@ -1,4 +1,5 @@
 1. Tweet
+    ->User permission
     ->Creeting
         ->Text
         ->Image

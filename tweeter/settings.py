@@ -26,6 +26,7 @@ SECRET_KEY = 'y5a)(zdi^@ljhh6=^sxl1=$(y&9)8et556jefq$m2j=*f=bim('
 DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1']
+LOGIN_URL='/login'
 
 
 # Application definition
