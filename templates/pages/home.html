@@ -45,20 +45,30 @@
         const url=myForm.getAttribute('action')
         const method= myForm.getAttribute('method')
         const xhr = new XMLHttpRequest()
+        const responseType = 'json'
+        xhr.responseType = responseType
         xhr.open(method, url)
         xhr.setRequestHeader('HTTP_X_REQUESTED_WITH','XMLHttpRequest')
         xhr.setRequestHeader('X-Requested-With','XMLHttpRequest')
         xhr.onload = function () {
-            const serverResponse = xhr.response
-            console.log(xhr.status,serverResponse)
-            const tweetsElement = document.getElementById('tweets')
-            loadTweets(tweetsElement)
+            // console.log(xhr.status,serverResponse)
+            // const tweetsElement = document.getElementById('tweets')
+            // loadTweets(tweetsElement)
+            if(xhr.status===201){
+                const newTweetJson = xhr.response
+                //const newTweetJson=JSON.parse(newTweet)
+                const newTweetContent=formatTweetElement(newTweetJson)
+                console.log(newTweetContent)
+                //tweetsContainerElement.prepend(newTweetContent)
+                const ogHtml=tweetsContainerElement.innerHTML
+                tweetsContainerElement.innerHTML=newTweetContent+ogHtml
+            }
         }
         xhr.send(myFormData)
     }
     const tweetsCreateFormEl=document.getElementById('tweet-create-form')
     tweetsCreateFormEl.addEventListener('submit',handleTweetCreateFormSubmit)
-    const tweetsElement=document.getElementById('tweets') //get an html element
+    const tweetsContainerElement=document.getElementById('tweets') //get an html element
     // tweetsElement.innerHTML='Loading...' // set new html in the element
 
     // var eli1='<h1>Hi there 1</h1>'
@@ -88,13 +98,13 @@
                 finalTweetStr += currentTweet
             }
 
-            tweetsElement.innerHTML = finalTweetStr
+            tweetsContainerElement.innerHTML = finalTweetStr
         }
 
         xhr.send()
     }
 
-    loadTweets(tweetsElement)
+    loadTweets(tweetsContainerElement)
 
     
 </script>
