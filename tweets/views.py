@@ -4,6 +4,11 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse,Http404,JsonResponse
 from django.utils.http import is_safe_url
 
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .serializers import TweetSerializers
+
+
 from .models import Tweet
 from .forms import TweetForm
 
@@ -17,7 +22,29 @@ def home_view(request,*args,**kwargs):
     return render(request,'pages/home.html',context={},status=200)
 
 
+@api_view(['POST'])
 def tweet_create_view(request,*args,**kwargs):
+    serializer=TweetSerializers(data=request.POST)
+    if serializer.is_valid(raise_exception=True):
+        serializer.save(user=request.user)
+        return Response(serializer.data,status=201)
+    return Response({},status=400)
+@api_view(['GET'])
+def tweet_list_view(request,*args,**kwargs):
+    qs=Tweet.objects.all()
+    serialize=TweetSerializers(qs,many=True)
+    return Response(serialize.data,status=200)
+
+@api_view(['GET'])
+def tweet_details_view(request,tweet_id,*args,**kwargs):
+    qs=Tweet.objects.filter(id=tweet_id)
+    if not qs.exists():
+        return Response({},status=404)
+    obj=qs.first()
+    serialize=TweetSerializers(obj)
+    return Response(serialize.data,status=200)
+
+def tweet_create_view_pure_django(request,*args,**kwargs):
     user=request.user
     if not request.user.is_authenticated:
         user=None
@@ -42,7 +69,7 @@ def tweet_create_view(request,*args,**kwargs):
             return JsonResponse(form.errors,status=400)
     return render(request,'components/form.html',context={'form':form})
 
-def tweet_list_view(request,*args,**kwargs):
+def tweet_list_view_pure_django(request,*args,**kwargs):
     '''
     Rest api view 
     consume by javascript or Swift/java/android
@@ -57,7 +84,7 @@ def tweet_list_view(request,*args,**kwargs):
 
     return JsonResponse(data)
 
-def tweet_details_view(request,tweet_id,*args,**kwargs):
+def tweet_details_view_pure_django(request,tweet_id,*args,**kwargs):
     '''
     Rest api view 
     consume by javascript or Swift/java/android

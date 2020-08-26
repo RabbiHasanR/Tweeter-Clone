@@ -23,6 +23,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',home_view),
     path('tweets/',tweet_list_view),
-    path('tweetdetails/<int:tweet_id>',tweet_details_view),
+    path('tweets/<int:tweet_id>',tweet_details_view),
     path('create-tweet/',tweet_create_view)
 ]
