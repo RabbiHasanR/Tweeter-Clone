@@ -62,6 +62,7 @@
                 //tweetsContainerElement.prepend(newTweetContent)
                 const ogHtml=tweetsContainerElement.innerHTML
                 tweetsContainerElement.innerHTML=newTweetContent+ogHtml
+                myForm.reset()
             }
         }
         xhr.send(myFormData)
