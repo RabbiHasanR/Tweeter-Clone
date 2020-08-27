@@ -2,6 +2,10 @@ from rest_framework import serializers
 from django.conf import settings
 from .models import Tweet
 
+class TweetActionSerializer(serializers.Serializer):
+    id=serializers.IntegerField()
+    action=serializers.CharField()
+
 class TweetSerializers(serializers.ModelSerializer):
     class Meta:
         model=Tweet
