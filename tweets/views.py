@@ -56,7 +56,7 @@ def tweet_delete_view(request,tweet_id,*args,**kwargs):
         return Response({},status=404)
     qs=qs.filter(user=request.user)
     if not qs.exists():
-        return Response({'message':'You can not delete this!'},status=404)
+        return Response({'message':'You can not delete this!'},status=401)
     obj=qs.first()
     obj.delete()
     return Response({'message':'Tweet removed!'},status=200)
@@ -91,7 +91,7 @@ def tweet_action_view(request,*args,**kwargs):
             parent_obj=obj
             new_tweet=Tweet.objects.create(user=request.user,parent=parent_obj,content=content)
             serialize=TweetSerializers(new_tweet)
-            return Response(serialize.data,status=200)
+            return Response(serialize.data,status=201)
     return Response({},status=200)
 
 def tweet_create_view_pure_django(request,*args,**kwargs):
