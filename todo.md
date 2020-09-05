@@ -5,6 +5,8 @@
         ->Image
     ->Delete
     ->Retweeting
+        ->Read only seraialize
+        ->Create only serializer
     ->Like or Unlike
 
 2. Users
