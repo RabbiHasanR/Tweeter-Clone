@@ -130,6 +130,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+
+STATIC_ROOT = os.path.join(BASE_DIR, "static-root")
+
 CORS_ALLOW_ALL_ORIGINS=True #any website to access my api
 CORS_URLS_REGEX = r'^/api/.*$'
 
