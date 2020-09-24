@@ -1,7 +1,6 @@
-import {CreateTweet,LoadTweets} from './lookup'
+import {BackendLookup} from './lookup'
 
 
 export{
-    LoadTweets,
-    CreateTweet,
+    BackendLookup
 }
