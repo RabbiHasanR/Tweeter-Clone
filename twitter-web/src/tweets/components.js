@@ -1,6 +1,6 @@
 import React,{useState,useEffect}from 'react'
 
-import {LoadTweets} from '../lookup'
+import {CreateTweet,LoadTweets} from '../lookup'
 
 
 
@@ -11,10 +11,16 @@ export function TweetsComponents(props){
         event.preventDefault()
         const newVal = textAreaRef.current.value
         let tempNewTweets=[...newTweets]
-        tempNewTweets.unshift({
-            content:newVal,
-            likes:0,
-            id:123123
+        console.log('new value:',newVal)
+        CreateTweet(newVal,(response,status)=>{
+            console.log(response,status)
+            if(status===201){
+                tempNewTweets.unshift(response)
+            }else{
+                console.log(response)
+                alert('An error occured please try again!')
+            }
+            
         })
         setNewTweets(tempNewTweets)
         textAreaRef.current.value=''
@@ -38,9 +44,11 @@ export function TweetsComponents(props){
 export function TweetLists(props) {
     const [tweetsInit, setTweetsInit] = useState([])
     const [tweets,setTweets]=useState([])
+    const [tweetsDidSet,setTweetsDidSet]=useState(false)
     const myCallBack = (response, status) => {
         console.log(response, status)
         if (status === 200) {
+            setTweetsDidSet(true)
             setTweetsInit(response)
         } else {
             alert('There was an error!')
@@ -54,8 +62,10 @@ export function TweetLists(props) {
     },[props.newTweets,tweets,tweetsInit])
 
     useEffect(() => {
-        LoadTweets(myCallBack)
-    }, [])
+        if(tweetsDidSet===false){
+            LoadTweets(myCallBack)
+        }
+    }, [tweetsInit,tweetsDidSet,setTweetsDidSet])
 
     return tweets.map((item, index) => {
         return <Tweet tweet={item} key={`${index}-{item.id}`} className='my-5 py-5 border bg-white text-dark' />

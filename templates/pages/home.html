@@ -7,7 +7,11 @@
         <h1>Welcome to Twitter!</h1>
     </div>
 </div>
-<div class="row md-3">
+<div id="twitter-el">
+
+</div>
+
+<div class="row md-3 d-none">
     <div class="col-md-4 mx-auto col-10">
         <form class="form" method="POST" id="tweet-create-form" action="/create-tweet/">
             {% csrf_token%}
@@ -18,7 +22,7 @@
         </form>
     </div>
 </div>
-<div class="row" id="tweets">
+<div class="row d-none" id="tweets">
     <!-- <div id="tweets">
     
     </div> -->
