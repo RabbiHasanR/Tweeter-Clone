@@ -36,6 +36,9 @@ def tweet_create_view(request,*args,**kwargs):
 @api_view(['GET'])
 def tweet_list_view(request,*args,**kwargs):
     qs=Tweet.objects.all()
+    username=request.GET.get('username') # ?username=rabbi
+    if username!=None:
+        qs=qs.filter(user__username__iexact=username)
     serialize=TweetSerializers(qs,many=True)
     return Response(serialize.data,status=200)
 

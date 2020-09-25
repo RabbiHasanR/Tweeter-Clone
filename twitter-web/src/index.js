@@ -16,11 +16,13 @@ if(appEl){
   );
 }
 
+const e=React.createElement
 const twitterEl = document.getElementById('twitter-el')
 if(twitterEl){
   ReactDOM.render(
     <React.StrictMode>
-      <TweetsComponents />
+      {/* <TweetsComponents username={twitterEl.dataset.username}/> */}
+      {e(TweetsComponents,twitterEl.dataset)}
     </React.StrictMode>,
     twitterEl
   );
